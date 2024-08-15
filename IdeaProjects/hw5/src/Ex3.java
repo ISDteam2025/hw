@@ -1,152 +1,54 @@
-public class Ex3 {
-    class Shape {
-        private String color;
-        private boolean filled;
-        public Shape() {
-            this.color = "red";
-            this.filled = true;
-        }
-        public Shape(String color, boolean filled) {
-            this.color = color;
-            this.filled = filled;
-        }
-        public String getColor() {
-            return color;
-        }
-        public void setColor(String color) {
-            this.color = color;
-        }
-        public boolean isFilled() {
-            return filled;
-        }
-        public void setFilled(boolean filled) {
-            this.filled = filled;
-        }
-        @Override
-        public String toString() {
-            return "Shape with color=" + color + " ,filled=" + filled ;
-        }
+ class IronSuit extends Vehicle {
+    private String suitColor;  // Additional attribute for IronSuit
+
+    // Constructor
+    public IronSuit(String name, double width, double height, double length, double weight, int seatingCapacity, String registrationNumber, String suitColor) {
+        super(name, width, height, length, weight, seatingCapacity, registrationNumber);
+        this.suitColor = suitColor;
     }
 
-    class Circle extends Shape {
-        private double radius;
-        public Circle() {
-            this.radius = 1.0;
-        }
-        public Circle(double radius) {
-            this.radius = radius;
-        }
-        public Circle(double radius, String color, boolean filled) {
-            super(color, filled);
-            this.radius = radius;
-        }
-        public double getRadius() {
-            return radius;
-        }
-        public void setRadius(double radius) {
-            this.radius = radius;
-        }
-        public double getArea() {
-            return Math.PI * radius * radius;
-        }
-        public double getPerimeter() {
-            return 2 * Math.PI * radius;
-        }
-        @Override
-        public String toString() {
-            return "Circle["+ super.toString()+"radius="+radius+"]";
-        }
+    // Getter and Setter for suitColor
+    public String getSuitColor() {
+        return suitColor;
     }
 
-    class Rectangle extends Shape {
-        private double width;
-        private double length;
-
-        public Rectangle() {
-            this.width = 1.0;
-            this.length = 1.0;
-        }
-        public Rectangle(double width, double length) {
-            this.width = width;
-            this.length = length;
-        }
-
-        public Rectangle(double width, double length, String color, boolean filled) {
-            super(color, filled);
-            this.width = width;
-            this.length = length;
-        }
-
-        public double getWidth() {
-            return width;
-        }
-
-        public void setWidth(double width) {
-            this.width = width;
-        }
-
-        public double getLength() {
-            return length;
-        }
-
-        public void setLength(double length) {
-            this.length = length;
-        }
-
-        public double getArea() {
-            return width * length;
-        }
-
-        public double getPerimeter() {
-            return 2 * (width + length);
-        }
-
-        @Override
-        public String toString() {
-            return "Rectangle[" + super.toString()+"width="+width+"length="+length+"]";
-        }
+    public void setSuitColor(String suitColor) {
+        this.suitColor = suitColor;
     }
 
-    class Square extends Rectangle {
-        public Square() {
-            super(1.0, 1.0);
-        }
+    // fly method that prints the points and distance
+    public void fly(String pointA, String pointB, double distance) {
+        System.out.println("Flying from " + pointA + " to " + pointB + ". Distance: " + distance + " km.");
+    }
 
-        public Square(double side) {
-            super(side, side);
+    // fly method with a progress bar simulation
+    public void flyWithProgressBar(String pointA, String pointB, double distance) {
+        System.out.print(pointA);
+        int numberOfDots = (int) (distance / 10); // Adjust the number of dots based on distance
+        for (int i = 0; i < numberOfDots; i++) {
+            try {
+                Thread.sleep(300);  // Pause for 0.3 seconds
+            } catch (InterruptedException e) {
+                // Ignore Exception handling
+            }
+            System.out.print(" .");
         }
+        System.out.println(" " + pointB);
+    }
 
-        public Square(double side, String color, boolean filled) {
-            super(side, side, color, filled);
-        }
+    @Override
+    public String toString() {
+        return super.toString() + ", Suit Color: " + suitColor;
+    }
 
-        public double getSide() {
-            return getWidth();
-        }
+    public static void main(String[] args) {
+        IronSuit ironSuit = new IronSuit("Mark-42", 1.5, 2.0, 2.5, 250.0, 1, "IM1234", "Red-Gold");
+        System.out.println(ironSuit);
 
-        public void setSide(double side) {
-            setWidth(side);
-            setLength(side);
-        }
+        // Test flying from Hanoi to Da Nang
+        ironSuit.fly("Hanoi", "Da Nang", 764.0);
 
-        @Override
-        public void setWidth(double side) {
-            super.setWidth(side);
-            super.setLength(side);
-        }
-
-        @Override
-        public void setLength(double side) {
-            super.setLength(side);
-            super.setWidth(side);
-        }
-
-        @Override
-        public String toString() {
-            return "A Square with side=" + getSide() + ", which is a subclass of " + super.toString();
-        }
+        // Test flying with progress bar
+        ironSuit.flyWithProgressBar("Hanoi", "Da Nang", 764.0);
     }
 }
-
-
-
